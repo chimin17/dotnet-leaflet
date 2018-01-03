@@ -1,0 +1,49 @@
+html, body, #container {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+body {
+  padding-top: 50px;
+}
+
+#map {
+  width: auto;
+  height: 100%;
+  z-index: 0;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+
+
+.navbar .navbar-brand {
+  font-weight: bold;
+  font-size: 25px;
+  color: #FFFFFF;
+}
+.navbar-collapse.in {
+  overflow-y: hidden;
+}
+.navbar-header .navbar-icon-container {
+  margin-right: 15px;
+}
+.navbar-header .navbar-icon {
+  line-height: 50px;
+  height: 50px;
+}
+.navbar-header a.navbar-icon {
+  margin-left: 25px;
+}
+@media (max-width: 992px) {
+  .navbar .navbar-brand {
+    font-size: 18px;
+  }
+}
+
+/* Print Handling */
+@media print {
+  .navbar {
+    display: none !important;
+  }
+ 
+}
