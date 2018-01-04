@@ -12530,6 +12530,7 @@
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.0": [
       "Microsoft.AspNetCore.All >= 2.0.3",
+      "Microsoft.AspNetCore.StaticFiles >= 2.0.1",
       "Microsoft.NETCore.App >= 2.0.0"
     ]
   },
@@ -12540,11 +12541,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/pann/GitRepo/tennisMap/test.csproj",
+      "projectUniqueName": "/Users/pann/GitRepo/dotnet-leaflet/test.csproj",
       "projectName": "test",
-      "projectPath": "/Users/pann/GitRepo/tennisMap/test.csproj",
+      "projectPath": "/Users/pann/GitRepo/dotnet-leaflet/test.csproj",
       "packagesPath": "/Users/pann/.nuget/packages/",
-      "outputPath": "/Users/pann/GitRepo/tennisMap/obj/",
+      "outputPath": "/Users/pann/GitRepo/dotnet-leaflet/obj/",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
@@ -12575,6 +12576,10 @@
           "Microsoft.AspNetCore.All": {
             "target": "Package",
             "version": "[2.0.3, )"
+          },
+          "Microsoft.AspNetCore.StaticFiles": {
+            "target": "Package",
+            "version": "[2.0.1, )"
           },
           "Microsoft.NETCore.App": {
             "target": "Package",

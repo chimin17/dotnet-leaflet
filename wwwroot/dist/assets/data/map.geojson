@@ -1,0 +1,352 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+  {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.318735,
+          22.589452
+        ]
+      },
+      "properties": {
+        "cartodb_id": 2,
+        "name": "前鎮高中網球場",
+        "description": false,
+        "tel": "(07)8226841轉206\n",
+        "surface": "紅土[clay]",
+        "city": "高雄市[Kaohsiung City]",
+        "type": "高中或國中小[School]",
+        "charge": "會員制，年費",
+        "number_of_courts": 2,
+        "address": "高雄市前鎮區鎮中路132號",
+        "light": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.462521,
+          23.472632
+        ]
+      },
+      "properties": {
+        "cartodb_id": 90,
+        "name": "嘉義市立網球場\n",
+        "description": false,
+        "tel": "05-2243001\n",
+        "surface": "紅土[clay]",
+        "city": "嘉義市[Chiayi City]",
+        "type": "公共設施[Public]",
+        "charge": "",
+        "number_of_courts": 4,
+        "address": "嘉義市體育路4號",
+        "light": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.524531,
+          22.676882
+        ]
+      },
+      "properties": {
+        "cartodb_id": 99,
+        "name": "長興國小網球場\n",
+        "description": false,
+        "tel": "(08)7368567\n",
+        "surface": "紅土[clay]",
+        "city": "屏東縣[Pintung County]",
+        "type": "高中或國中小[School]",
+        "charge": "",
+        "number_of_courts": 2,
+        "address": "屏東縣長治鄉新潭村潭頭路50號",
+        "light": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.541344,
+          25.032619
+        ]
+      },
+      "properties": {
+        "cartodb_id": 101,
+        "name": "大安高工網球場\n",
+        "description": false,
+        "tel": "(02)27091630#123\n",
+        "surface": "硬地[hard]",
+        "city": "台北市[Taipei City]",
+        "type": "高中或國中小[School]",
+        "charge": "",
+        "number_of_courts": 2,
+        "address": "臺北市大安區龍圖里復興南路2段52號",
+        "light": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.519504,
+          25.118354
+        ]
+      },
+      "properties": {
+        "cartodb_id": 109,
+        "name": "臺北護理健康大學網球場\n",
+        "description": false,
+        "tel": "(02)28227101#2901\n",
+        "surface": "硬地[hard]",
+        "city": "台北市[Taipei City]",
+        "type": "大專院校[University]",
+        "charge": "",
+        "number_of_courts": 2,
+        "address": "臺北市北投區明德路365號",
+        "light": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.400162,
+          22.637013
+        ]
+      },
+      "properties": {
+        "cartodb_id": 324,
+        "name": "中庄國中網球場\n",
+        "description": false,
+        "tel": "(07)7033166\n",
+        "surface": "硬地[hard]",
+        "city": "高雄市[Kaohsiung City]",
+        "type": "高中或國中小[School]",
+        "charge": "",
+        "number_of_courts": 1,
+        "address": "",
+        "light": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.371294,
+          22.762206
+        ]
+      },
+      "properties": {
+        "cartodb_id": 326,
+        "name": "明陽中學網球場",
+        "description": false,
+        "tel": "",
+        "surface": "硬地[hard]",
+        "city": "高雄市[Kaohsiung City]",
+        "type": "高中或國中小[School]",
+        "charge": "",
+        "number_of_courts": 1,
+        "address": "",
+        "light": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.864171,
+          25.036733
+        ]
+      },
+      "properties": {
+        "cartodb_id": 349,
+        "name": "雙溪運動公園\n",
+        "description": false,
+        "tel": "2493-1111#221\n",
+        "surface": "硬地[hard]",
+        "city": "新北市[New Taipei City]",
+        "type": "公共設施[Public]",
+        "charge": "",
+        "number_of_courts": 1,
+        "address": "",
+        "light": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.546571,
+          23.71265
+        ]
+      },
+      "properties": {
+        "cartodb_id": 373,
+        "name": "斗六高級中學網球場\n",
+        "description": false,
+        "tel": "(05)5322039\n",
+        "surface": "硬地[hard]",
+        "city": "雲林縣[Yunlin County]",
+        "type": "高中或國中小[School]",
+        "charge": "",
+        "number_of_courts": 1,
+        "address": "",
+        "light": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.924459,
+          23.904335
+        ]
+      },
+      "properties": {
+        "cartodb_id": 375,
+        "name": "新城國小網球場\n",
+        "description": false,
+        "tel": "(04)92895724\n",
+        "surface": "硬地[hard]",
+        "city": "南投縣[Nantou County]",
+        "type": "高中或國中小[School]",
+        "charge": "",
+        "number_of_courts": 1,
+        "address": "",
+        "light": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.082712,
+          22.835127
+        ]
+      },
+      "properties": {
+        "cartodb_id": 397,
+        "name": "東成國小運動中心\n",
+        "description": false,
+        "tel": "(08)9571124\n",
+        "surface": "硬地[hard]",
+        "city": "臺東縣[Taitung County]",
+        "type": "高中或國中小[School]",
+        "charge": "",
+        "number_of_courts": 1,
+        "address": "",
+        "light": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.185521,
+          24.788695
+        ]
+      },
+      "properties": {
+        "cartodb_id": 421,
+        "name": "關西高中網球場\n",
+        "description": false,
+        "tel": "03-5872049#223\n",
+        "surface": "硬地[hard]",
+        "city": "新竹縣[Hsinchu County]",
+        "type": "高中或國中小[School]",
+        "charge": "",
+        "number_of_courts": 1,
+        "address": "",
+        "light": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.392475,
+          23.604417
+        ]
+      },
+      "properties": {
+        "cartodb_id": 423,
+        "name": "溪口國小網球場\n",
+        "description": false,
+        "tel": "(05)2691013-918\n",
+        "surface": "硬地[hard]",
+        "city": "嘉義縣[Chiayi County]",
+        "type": "高中或國中小[School]",
+        "charge": "",
+        "number_of_courts": 1,
+        "address": "",
+        "light": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.325342,
+          25.000698
+        ]
+      },
+      "properties": {
+        "cartodb_id": 71,
+        "name": "退輔會訓練中心",
+        "description": false,
+        "tel": "",
+        "surface": "硬地[hard]",
+        "city": "桃園市[Taoyuan City]",
+        "type": "其他[other]",
+        "charge": "",
+        "number_of_courts": 1,
+        "address": "",
+        "light": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.299024,
+          22.626115
+        ]
+      },
+      "properties": {
+        "cartodb_id": 5,
+        "name": "民生網球場",
+        "description": false,
+        "tel": "07-3315416\n",
+        "surface": "紅土[clay]",
+        "city": "高雄市[Kaohsiung City]",
+        "type": "公共設施[Public]",
+        "charge": "會員制，年費",
+        "number_of_courts": 4,
+        "address": "高雄市新興區民生一路、中山一路",
+        "light": true
+      }
+    }
+  
+  
+  ]
+}

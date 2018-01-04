@@ -23,6 +23,5 @@ dotnet restore
 dotnet run 
 ```
 
-
 ## About the Style
 The css style is referenced by [BootLeaf](http://bmcbride.github.io/bootleaf/).

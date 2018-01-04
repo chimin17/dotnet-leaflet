@@ -37,8 +37,11 @@ namespace test
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseStaticFiles();
-
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                ServeUnknownFileTypes = true,
+                DefaultContentType = "text/json"
+            });
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
