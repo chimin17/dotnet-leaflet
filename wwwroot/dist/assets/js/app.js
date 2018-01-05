@@ -142,24 +142,94 @@ function syncSidebar() {
       }
     }
   });
-  /* Loop through museums layer and add only features which are in the map bounds */
-  museums.eachLayer(function (layer) {
-    if (map.hasLayer(museumLayer)) {
-      if (map.getBounds().contains(layer.getLatLng())) {
-        $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="assets/img/museum.png"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
-      }
-    }
-  });
-  /* Update list.js featureList */
-  featureList = new List("features", {
-    valueNames: ["feature-name"]
-  });
-  featureList.sort("feature-name", {
-    order: "asc"
-  });
 }
 
 $("#nav-btn").click(function () {
   $(".navbar-collapse").collapse("toggle");
   return false;
 });
+
+
+//random
+var ramdomLayer = L.geoJson(null, {
+  pointToLayer: function (feature, latlng) {
+    return L.marker(latlng, {
+      icon: L.icon({
+        iconUrl: "./dist/assets/img/icon-black.png",
+        iconSize: [36, 36],
+        iconAnchor: [0, 18]
+      }),
+    });
+  }
+});
+var ramdompts = turf.randomPoint(25, { bbox: [121.41, 24.9, 121.8, 25.19] });
+ramdomLayer.addData(ramdompts);
+ramdomLayer.addTo(map);
+var ntp = L.geoJson(null);
+var ptsInLayer = L.geoJson(null, {
+  pointToLayer: function (feature, latlng) {
+    var icon;
+    if (feature.properties.cluster == 0)
+      icon = "./dist/assets/img/icon-orange.png";
+    else if (feature.properties.cluster == 1)
+      icon = "./dist/assets/img/icon-purple.png";
+    else if (feature.properties.cluster == 2)
+      icon = "./dist/assets/img/icon-red.png";
+    else
+      icon = "./dist/assets/img/icon-green.png";
+    return L.marker(latlng, {
+      icon: L.icon({
+        iconUrl: icon,
+        iconSize: [36, 36],
+        iconAnchor: [0, 18]
+      }),
+    });
+  }
+});
+$.getJSON("./dist/assets/data/ntp.geojson", function (data) {
+  ntp.addData(data);
+  map.addLayer(ntp);
+  var ptsWithin = turf.pointsWithinPolygon(ramdompts, data);
+  var clustered_kmeans = turf.clustersKmeans(ptsWithin, { numberOfClusters: 5 });
+  ptsInLayer.addData(clustered_kmeans);
+
+  map.addLayer(ptsInLayer);
+
+  //重心
+  var center = turf.center(data);
+  L.geoJson(center).addTo(map).bindPopup('這是新北幾何中心').openPopup();
+
+  //最短距離
+  var nearest = turf.nearestPoint(center, ptsWithin);
+  L.geoJson(nearest, {
+    pointToLayer: function (feature, latlng) {
+
+      return L.marker(latlng, {
+        icon: L.icon({
+          iconUrl: "./dist/assets/img/pin.png",
+          iconSize: [36, 36],
+          iconAnchor: [0, 18]
+        }),
+      });
+    }
+  }).addTo(map).bindPopup('這是距離新北中心最近的點');
+});
+
+//
+
+
+var overLayers = [
+  {
+    name: "新北行政區",
+    layer: ntp
+  },
+  {
+    name: "全區",
+    layer: ramdomLayer
+  },
+  {
+    name: "新北",
+    layer: ptsInLayer
+  }
+];
+map.addControl(new L.Control.PanelLayers([], overLayers));

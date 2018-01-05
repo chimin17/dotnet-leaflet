@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="~/dist/assets/css/L.Control.Basemaps.css" />
     <link rel="stylesheet" href="~/dist/assets/css/Control.Geocoder.css" />
     <link rel="stylesheet" href="~/dist/assets/css/leaflet-measure.css" />
+<link rel="stylesheet" href="~/dist/assets/css/leaflet-panel-layers.css" />
 
     <link rel="stylesheet" href="~/dist/assets/css/app.css">
 
@@ -57,9 +58,7 @@
               <h3 class="panel-title">球場清單
               <button type="button" class="btn btn-xs btn-default pull-right" id="sidebar-hide-btn"><i class="fa fa-chevron-left"></i></button></h3>
             </div>
-            <div class="panel-body">
-                資料來源： Kuan-Hsun Cho
-            </div>
+          
             <div class="sidebar-table">
               <table class="table table-hover" id="poi-list">
                 <thead class="hidden">
@@ -67,6 +66,9 @@
                 </thead>
                 <tbody class="list"></tbody>
               </table>
+            </div>
+              <div class="panel-body">
+                資料來源： Kuan-Hsun Cho
             </div>
           </div>
         </div>
@@ -96,9 +98,10 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
 <script src="~/dist/assets/js/L.Control.Basemaps.js"></script>
-
+<script src="~/dist/assets/js/turf.min.js"></script>
 <script src="~/dist/assets/js/Control.Geocoder.js"></script>
 <script src="~/dist/assets/js/leaflet-measure.js"></script>
+  <script src="~/dist/assets/js/leaflet-panel-layers.js"></script>
 <script src="~/dist/assets/js/app.js"></script>
 </body>
 </html>
