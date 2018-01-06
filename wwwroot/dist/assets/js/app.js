@@ -132,16 +132,6 @@ var highlightStyle = {
 
 
 function syncSidebar() {
-  /* Empty sidebar features */
-  $("#feature-list tbody").empty();
-  /* Loop through theaters layer and add only features which are in the map bounds */
-  theaters.eachLayer(function (layer) {
-    if (map.hasLayer(theaterLayer)) {
-      if (map.getBounds().contains(layer.getLatLng())) {
-        $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="assets/img/theater.png"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
-      }
-    }
-  });
 }
 
 $("#nav-btn").click(function () {
@@ -218,9 +208,109 @@ $.getJSON("./dist/assets/data/ntp.geojson", function (data) {
 //
 
 
+
+
+//內插
+var ramdomLayer_ipl = L.geoJson(null, {
+  pointToLayer: function (feature, latlng) {
+    return L.marker(latlng, {
+      icon: L.icon({
+        iconUrl: "./dist/assets/img/icon-black.png",
+        iconSize: [12, 12],
+        iconAnchor: [0, 6]
+      }),
+    }).bindPopup(feature.properties.obs.toFixed(3).toString());
+  }
+});
+var ramdompts_ipl = turf.randomPoint(25, { bbox: [121.41, 24.34, 121.8, 24.65] });
+turf.featureEach(ramdompts_ipl, function (point) {
+  point.properties.obs = Math.random() * 25;
+});
+ramdomLayer_ipl.addData(ramdompts_ipl).addTo(map);
+
+
+var idw_grid = turf.interpolate(ramdompts_ipl, 2, { gridType: 'square', property: 'obs', units: 'kilometers' });
+var idw_gridLayer = L.geoJson(idw_grid, {
+  onEachFeature: function (feature, layer) {
+    layer.bindPopup(feature.properties.obs.toFixed(3).toString());
+  },
+  style: function (feature) {
+    return {
+      "fillColor": getColor(feature.properties.obs),
+      "weight": 0.5,
+      "color": '#bd0026',
+      "opacity": 1,
+    }
+  }
+}
+).addTo(map);
+
+
+
+function getColor(x) {
+  return x < 5 ? '#bd0026' :
+    x < 10 ? '#f03b20' :
+      x < 15 ? '#fd8d3c' :
+        x < 20 ? '#fecc5c' :
+          '#ffffb2';
+};
+
+
+
+var tin = turf.tin(ramdompts_ipl, 'obs');
+var tinLayer = L.geoJson(tin, {
+  onEachFeature: function (feature, layer) {
+    var obs = feature.properties.a + feature.properties.b + feature.properties.c;
+    feature.properties.obs = obs / 3;
+    layer.bindPopup(feature.properties.obs.toFixed(3).toString());
+  },
+  style: function (feature) {
+    var obs = feature.properties.a + feature.properties.b + feature.properties.c;
+
+    return {
+      "fillColor": getColor(obs),
+      "weight": 0.5,
+      "color": '#bd0026',
+      "opacity": 1,
+    }
+  }
+}
+).addTo(map);
+
+
+
+var voronoiPolygons = turf.voronoi(ramdompts_ipl,
+  { bbox: [121.41, 24.34, 121.8, 24.65] });
+turf.featureEach(voronoiPolygons, function (feature, index) {
+  feature.properties.obs = ramdompts_ipl.features[index].properties.obs;
+});
+
+var voronoiLayer = L.geoJson(voronoiPolygons, {
+  onEachFeature: function (feature, layer) {
+
+    layer.bindPopup(feature.properties.obs.toFixed(3).toString());
+  },
+  style: function (feature) {
+
+    return {
+      "fillColor": getColor(feature.properties.obs),
+      "weight": 0.5,
+      "color": '#bd0026',
+      "opacity": 1,
+    }
+  }
+}
+).addTo(map);
+
+
+
 var overLayers = [
   {
-    name: "新北行政區",
+    name: "網球場",
+    layer: pois
+  },
+  {
+    name: "行政區",
     layer: ntp
   },
   {
@@ -230,6 +320,21 @@ var overLayers = [
   {
     name: "新北",
     layer: ptsInLayer
+  },
+  {
+    name: "IDW",
+    layer: idw_gridLayer
+
+  },
+  {
+    name: "TIN",
+    layer: tinLayer
+
+  }, {
+    name: "voronoi",
+    layer: voronoiLayer
+
   }
 ];
 map.addControl(new L.Control.PanelLayers([], overLayers));
+map.fitBounds(voronoiLayer.getBounds());

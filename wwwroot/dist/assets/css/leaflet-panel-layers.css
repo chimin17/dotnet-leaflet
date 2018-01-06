@@ -1,7 +1,13 @@
+.leaflet-panel-layers-list{
+
+
+	height:250px;
+	max-height: 250px;
+}
+
 
 /* PANEL LAYERS */
 .leaflet-panel-layers .leaflet-panel-layers-list {
-	height: 70px;
 	display: block;
 }
 .leaflet-panel-layers.expanded .leaflet-panel-layers-list {
@@ -11,7 +17,7 @@
 	margin: 10px;
 }
 .leaflet-panel-layers {
-	width: 30px;
+	width: 50px;
 	min-width: 30px;
 }
 .leaflet-panel-layers.expanded {	
