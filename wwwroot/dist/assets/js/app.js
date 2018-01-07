@@ -222,7 +222,7 @@ var ramdomLayer_ipl = L.geoJson(null, {
     }).bindPopup(feature.properties.obs.toFixed(3).toString());
   }
 });
-var ramdompts_ipl = turf.randomPoint(25, { bbox: [121.41, 24.34, 121.8, 24.65] });
+var ramdompts_ipl = turf.randomPoint(200, { bbox: [121.41, 24.34, 121.8, 24.65] });
 turf.featureEach(ramdompts_ipl, function (point) {
   point.properties.obs = Math.random() * 25;
 });
@@ -302,7 +302,43 @@ var voronoiLayer = L.geoJson(voronoiPolygons, {
 }
 ).addTo(map);
 
+var contours_pts = turf.interpolate(ramdompts_ipl, 2, { gridType: 'points', property: 'obs', units: 'kilometers' });
 
+var contours = turf.isobands(contours_pts, [0, 5, 10, 15, 20, 25, 30], { zProperty: 'obs' });
+
+var contoursLayer = L.geoJson(contours, {
+  onEachFeature: function (feature, layer) {
+
+    layer.bindPopup(feature.properties.obs);
+  },
+  style: function (feature) {
+
+    return {
+      "fillColor": getColor(parseInt(feature.properties.obs.split('-')[0])),
+      "weight": 0.5,
+      "color": '#bd0026',
+      "opacity": 1,
+    }
+  }
+}
+).addTo(map);
+
+var arr = [];
+turf.featureEach(ramdompts_ipl, function (feature) {
+  arr.push([feature.geometry.coordinates[1],
+  feature.geometry.coordinates[0],
+  feature.properties.obs,
+  ]);
+});
+var heatmapLayer = L.heatLayer(arr, {
+  radius: 100,
+  minOpacity: 0,
+  blur: 0.75,
+  gradient: { 0.1: 'blue', 0.2: 'lime', 0.3: 'red' }
+}).addTo(map);
+
+var clusterLayer = L.markerClusterGroup();
+clusterLayer.addLayer(ramdomLayer_ipl).addTo(map);
 
 var overLayers = [
   {
@@ -333,8 +369,25 @@ var overLayers = [
   }, {
     name: "voronoi",
     layer: voronoiLayer
+  },
+  {
+    name: "contours",
+    layer: contoursLayer
+  },
+
+  {
+    name: "heat",
+    layer: heatmapLayer
+  },
+  {
+    name: "cluster",
+    layer: clusterLayer
 
   }
 ];
 map.addControl(new L.Control.PanelLayers([], overLayers));
+
+
+
+
 map.fitBounds(voronoiLayer.getBounds());
