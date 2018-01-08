@@ -187,7 +187,7 @@ $.getJSON("./dist/assets/data/ntp.geojson", function (data) {
 
   //重心
   var center = turf.center(data);
-  L.geoJson(center).addTo(map).bindPopup('這是新北幾何中心').openPopup();
+  L.geoJson(center)//.addTo(map).bindPopup('這是新北幾何中心')//.openPopup();
 
   //最短距離
   var nearest = turf.nearestPoint(center, ptsWithin);
@@ -202,7 +202,7 @@ $.getJSON("./dist/assets/data/ntp.geojson", function (data) {
         }),
       });
     }
-  }).addTo(map).bindPopup('這是距離新北中心最近的點');
+  })//.addTo(map).bindPopup('這是距離新北中心最近的點');
 });
 
 //
@@ -331,14 +331,39 @@ turf.featureEach(ramdompts_ipl, function (feature) {
   ]);
 });
 var heatmapLayer = L.heatLayer(arr, {
-  radius: 100,
+  radius: 30,
   minOpacity: 0,
-  blur: 0.75,
-  gradient: { 0.1: 'blue', 0.2: 'lime', 0.3: 'red' }
+
+  blur: 0.75
 }).addTo(map);
 
 var clusterLayer = L.markerClusterGroup();
 clusterLayer.addLayer(ramdomLayer_ipl).addTo(map);
+
+
+
+// var layerControl = L.control.layers(baseLayers);
+// layerControl.addTo(map);
+var velocityLayer = L.velocityLayer(null);
+$.getJSON("./dist/assets/data/wind-global.json", function (data) {
+
+  velocityLayer = L.velocityLayer({
+    displayValues: false,
+    data: data,
+    maxVelocity: 10,
+    colorScale: ['#bd0026', '#f03b20', '#fd8d3c', '#fecc5c', '#ffffb2']
+  });
+  map.addLayer(velocityLayer);
+
+});
+
+
+
+
+map.fitBounds(voronoiLayer.getBounds());
+
+
+
 
 var overLayers = [
   {
@@ -358,10 +383,16 @@ var overLayers = [
     layer: ptsInLayer
   },
   {
+    name: "隨機點",
+    layer: ramdomLayer_ipl
+
+  },
+  {
     name: "IDW",
     layer: idw_gridLayer
 
   },
+
   {
     name: "TIN",
     layer: tinLayer
@@ -382,12 +413,13 @@ var overLayers = [
   {
     name: "cluster",
     layer: clusterLayer
+  },
+  {
+    name: "wind",
+    layer: velocityLayer
 
   }
 ];
 map.addControl(new L.Control.PanelLayers([], overLayers));
 
 
-
-
-map.fitBounds(voronoiLayer.getBounds());

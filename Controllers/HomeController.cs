@@ -7,14 +7,18 @@ using Microsoft.AspNetCore.Mvc;
 using test.Models;
 using System.Threading;
 using System.Web;
+using System.Net;
+using System.IO;
 namespace test.Controllers
 {
     public class HomeController : Controller
     {
         public ActionResult Index()
         {
+
             return View();
         }
+
 
     }
 }
