@@ -302,7 +302,7 @@ var voronoiLayer = L.geoJson(voronoiPolygons, {
 }
 ).addTo(map);
 
-var contours_pts = turf.interpolate(ramdompts_ipl, 2, { gridType: 'points', property: 'obs', units: 'kilometers' });
+var contours_pts = turf.interpolate(ramdompts_ipl, 22, { gridType: 'points', property: 'obs', units: 'kilometers' });
 
 var contours = turf.isobands(contours_pts, [0, 5, 10, 15, 20, 25, 30], { zProperty: 'obs' });
 
@@ -353,28 +353,29 @@ $.getJSON("./dist/assets/data/wind-global.json", function (data) {
     maxVelocity: 10,
     colorScale: ['#bd0026', '#f03b20', '#fd8d3c', '#fecc5c', '#ffffb2']
   });
-  map.addLayer(velocityLayer);
+  //map.addLayer(velocityLayer);
 
 });
 
 
 
 
-map.fitBounds(voronoiLayer.getBounds());
-
 
 
 
 var overLayers = [
   {
+    active: false,
     name: "網球場",
     layer: pois
   },
   {
+    active: false,
     name: "行政區",
     layer: ntp
   },
   {
+    active: false,
     name: "全區",
     layer: ramdomLayer
   },
@@ -420,6 +421,73 @@ var overLayers = [
 
   }
 ];
-map.addControl(new L.Control.PanelLayers([], overLayers));
 
+map.addControl(new L.Control.PanelLayers([], overLayers));
+$.each(overLayers, function (k, v) {
+
+  map.removeLayer(v.layer);
+})
+
+
+$.get("../api/products", function (data) {
+  var jdata = JSON.parse(data);
+
+  $("#route-list tbody").children().remove();
+  $.each(jdata.routes[0].legs[0].steps, function (k, v) {
+
+    $("#route-list tbody").append("<tr id='" + v.polyline.points + "' class='route-row'><td>" + v.html_instructions + "</td></tr>");
+
+  })
+
+
+  var latlngs = L.PolylineUtil.decode(jdata.routes[0].overview_polyline.points);
+  var polyline = L.polyline(latlngs);
+  var decorator = L.polylineDecorator(polyline, {
+    patterns: [
+      { offset: 0, repeat: 10, symbol: L.Symbol.dash({ pixelSize: 3, pathOptions: { color: '#000', weight: 4, opacity: 0.5 } }) },
+      {
+        offset: '5%', repeat: '10%', symbol: L.Symbol.arrowHead({ pixelSize: 16, pathOptions: { fillOpacity: 1, weight: 0 } })
+      }
+    ]
+  }).addTo(map);
+  map.setView([latlngs[0][0] - 0.001, latlngs[0][1]], 17)
+  // map.fitBounds(decorator.getBounds());
+  console.log(jdata)
+});
+
+
+
+$("#bottom-hide-btn").click(function () {
+  animateBottom();
+  return false;
+});
+
+
+$("#route-btn").click(function () {
+  animateBottom();
+  return false;
+});
+
+function animateBottom() {
+  $("#bottom-sidebar").animate({
+    height: "toggle"
+  }, 350, function () {
+    map.invalidateSize();
+  });
+}
+
+$(document).on("click", ".route-row", function (e) {
+  $('#googleRouting').animate({ scrollTop: $(this).context.offsetTop }, 800);
+  routelineClick($(this).attr("id"));
+
+});
+
+var subRoute = L.geoJson(null);
+function routelineClick(str) {
+  map.removeLayer(subRoute);
+  var latlngs = L.PolylineUtil.decode(str);
+  subRoute = L.polyline(latlngs, { color: 'red' }).addTo(map);
+  map.setView([latlngs[0][0] - 0.001, latlngs[0][1]], 17)
+}
+//map.fitBounds(voronoiLayer.getBounds());
 
