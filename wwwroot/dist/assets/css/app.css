@@ -20,6 +20,10 @@ body {
   float: left;
 }
 
+#googleStreet{
+    height: 100%;
+    overflow: scroll
+}
 #googleRouting{
     height: 100%;
     overflow: scroll

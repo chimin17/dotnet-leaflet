@@ -111,7 +111,17 @@
           
       
               <div class="panel-body">
-                <div id="googleRouting">
+      <div id="googleStreet">
+                 
+
+
+
+
+
+                </div>
+
+
+                <div id="googleRouting" style="display:none">
                   <table class="table table-hover" id="route-list">
                      <thead class="hidden">
              
@@ -136,6 +146,9 @@
 
 
   </div>
+  <script type="text/javascript"
+  src="https://maps.googleapis.com/maps/api/js?key=your_key&libraries=StreetViewPanorama">
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
@@ -150,5 +163,6 @@
 <script src="~/dist/assets/js/leaflet.polylineDecorator.js"></script>
 <script src="~/dist/assets/js/L.encode.js"></script>
 <script src="~/dist/assets/js/app.js"></script>
+
 </body>
 </html>

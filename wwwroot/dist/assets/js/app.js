@@ -489,5 +489,39 @@ function routelineClick(str) {
   subRoute = L.polyline(latlngs, { color: 'red' }).addTo(map);
   map.setView([latlngs[0][0] - 0.001, latlngs[0][1]], 17)
 }
+
+
+var panoramMan = L.geoJson(null);
+var streetIcon = L.icon({
+  iconUrl: './dist/assets/img/streetman.png',
+  iconSize: [32, 32],
+});
+var panorama = new google.maps.StreetViewPanorama(
+  document.getElementById('googleStreet'), {
+    position: {
+      lat: 25.0574304,
+      lng: 121.5964764
+    },
+    pov: { heading: 165, pitch: 0 }
+  });
+panorama.addListener('position_changed', function () {
+  map.removeLayer(panoramMan);
+  console.log("x:" + panorama.getPosition().lng());
+  console.log("y:" + panorama.getPosition().lat());
+  console.log("rotation:" + panorama.pov.heading);
+  panoramMan = L.marker([panorama.getPosition().lat(), panorama.getPosition().lng()],
+    { rotationAngle: panorama.pov.heading, icon: streetIcon }).addTo(map);
+  map.setView([panorama.getPosition().lat(), panorama.getPosition().lng()], 17)
+});
+
+panorama.addListener('pov_changed', function () {
+  map.removeLayer(panoramMan);
+  console.log("x:" + panorama.getPosition().lng());
+  console.log("y:" + panorama.getPosition().lat());
+  console.log("rotation:" + panorama.pov.heading);
+  panoramMan = L.marker([panorama.getPosition().lat(), panorama.getPosition().lng()],
+    { rotationAngle: panorama.pov.heading, icon: streetIcon }).addTo(map);
+  map.setView([panorama.getPosition().lat(), panorama.getPosition().lng()], 17)
+});
 //map.fitBounds(voronoiLayer.getBounds());
 
