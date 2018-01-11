@@ -19,7 +19,10 @@ body {
   max-width: 100%;
   float: left;
 }
-
+#mly{
+    height: 100%;
+    overflow: scroll
+}
 #googleStreet{
     height: 100%;
     overflow: scroll

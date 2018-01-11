@@ -22,7 +22,7 @@
 	<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.css" />
 	<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.Default.css" />
    <link rel="stylesheet" href="~/dist/assets/css/leaflet-velocity.min.css" />
-  
+      <link href='https://unpkg.com/mapillary-js@2.10.1/dist/mapillary.min.css' rel='stylesheet' />
     <link rel="stylesheet" href="~/dist/assets/css/app.css">
 
     <link rel="apple-touch-icon" sizes="76x76" href="~/dist/assets/img/favicon-76.png">
@@ -46,7 +46,9 @@
           <ul class="nav navbar-nav">
             <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="list-btn"><i class="fa fa-list white"></i>&nbsp;&nbsp;球場列表</a></li>
              <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="route-btn"><i class="fa fa-indent white"></i>&nbsp;&nbsp;導航</a></li>
-           
+               <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="google-btn"><i class="fa fa-indent white"></i>&nbsp;&nbsp;Google街景</a></li>
+              <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="mapillary-btn"><i class="fa fa-indent white"></i>&nbsp;&nbsp;Mapillary</a></li>
+          
             <ul>
 
     </div>
@@ -103,7 +105,7 @@
         <div class="sidebar-wrapper">
           <div class="panel panel-default" id="bottom-panel">
             <div class="panel-heading">
-              <h3 class="panel-title">路徑規劃
+              <h3 class="panel-title"> 功能區塊
               <button type="button" class="btn btn-xs btn-default pull-right" id="bottom-hide-btn"><i class="fa fa-chevron-down"></i>
               
               </button></h3>
@@ -111,15 +113,8 @@
           
       
               <div class="panel-body">
-      <div id="googleStreet">
-                 
-
-
-
-
-
-                </div>
-
+      <div id="googleStreet" style="display:none"> </div>
+  <div id="mly" > </div>
 
                 <div id="googleRouting" style="display:none">
                   <table class="table table-hover" id="route-list">
@@ -128,11 +123,6 @@
                     </thead>
                     <tbody class="list"></tbody>
               </table>
-
-
-
-
-
                 </div>
             </div>
           </div>
@@ -149,6 +139,7 @@
   <script type="text/javascript"
   src="https://maps.googleapis.com/maps/api/js?key=your_key&libraries=StreetViewPanorama">
 </script>
+    <script src='https://unpkg.com/mapillary-js@2.10.1/dist/mapillary.min.js'></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>

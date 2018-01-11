@@ -22,7 +22,7 @@ namespace test.Controllers
         [Route("api/products")]
         public string products()
         {
-            string token = "AIzaSyCtMiBH_uXklpSaP-your_key";
+            string token = "your_key";
             string start = "25.0574121,121.5964832";
             string end = "25.0534121,121.5964832";
             // Create a request for the URL. 		

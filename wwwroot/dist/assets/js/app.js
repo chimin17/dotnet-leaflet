@@ -464,16 +464,35 @@ $("#bottom-hide-btn").click(function () {
 
 
 $("#route-btn").click(function () {
-  animateBottom();
+  animateBottom("#googleRouting");
   return false;
 });
+$("#google-btn").click(function () {
+  animateBottom("#googleStreet");
+  return false;
+});
+$("#mapillary-btn").click(function () {
+  animateBottom("#mly");
+  return false;
+});
+var currentBottomdiv = "#mly";
+function animateBottom(type) {
+  $("#googleRouting").hide();
+  $("#googleStreet").hide();
+  $("#mly").hide();
+  $(type).show();
+  if (currentBottomdiv == type) {
+    currentBottomdiv = "";
+    $("#bottom-sidebar").animate({
+      height: "toggle"
+    }, 350, function () {
+      map.invalidateSize();
+    });
+  }
+  else {
+    currentBottomdiv = type;
 
-function animateBottom() {
-  $("#bottom-sidebar").animate({
-    height: "toggle"
-  }, 350, function () {
-    map.invalidateSize();
-  });
+  }
 }
 
 $(document).on("click", ".route-row", function (e) {
@@ -525,3 +544,24 @@ panorama.addListener('pov_changed', function () {
 });
 //map.fitBounds(voronoiLayer.getBounds());
 
+
+
+var mly = new Mapillary.Viewer(
+  'mly',
+  'your_key',
+  'MiEVQvYuxJOmTgpS2TNK8w'
+);
+
+var mlyMan;
+mly.on(Mapillary.Viewer.nodechanged, function (node) {
+  var latLon = [node.latLon.lat, node.latLon.lon];
+
+  if (!mlyMan) {
+    mlyMan = L.marker(latLon);
+    mlyMan.addTo(map);
+  } else {
+    mlyMan.setLatLng(latLon);
+  }
+
+  map.setView(latLon);
+});
