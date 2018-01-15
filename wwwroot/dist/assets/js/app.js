@@ -38,9 +38,7 @@ var measureControl = new L.Control.Measure({ measureControl: true, primaryAreaUn
 measureControl.addTo(map);
 
 $("#streetView-hide-btn").click(function () {
-
   $("#streetView").fadeOut();
-
 });
 
 $("#sidebar-hide-btn").click(function () {
@@ -119,6 +117,7 @@ function sidebarClick(id) {
 }
 
 $.getJSON("./dist/assets/data/map.geojson", function (data) {
+  featchdata(data);
   pois.addData(data);
   map.addLayer(pois);
 });
@@ -475,11 +474,16 @@ $("#mapillary-btn").click(function () {
   animateBottom("#mly");
   return false;
 });
+$("#chart-btn").click(function () {
+  animateBottom("#chart");
+  return false;
+});
 var currentBottomdiv = "#mly";
 function animateBottom(type) {
   $("#googleRouting").hide();
   $("#googleStreet").hide();
   $("#mly").hide();
+  $("#chart").hide();
   $(type).show();
   if (currentBottomdiv == type) {
     currentBottomdiv = "";
@@ -506,7 +510,7 @@ function routelineClick(str) {
   map.removeLayer(subRoute);
   var latlngs = L.PolylineUtil.decode(str);
   subRoute = L.polyline(latlngs, { color: 'red' }).addTo(map);
-  map.setView([latlngs[0][0] - 0.001, latlngs[0][1]], 17)
+  //map.setView([latlngs[0][0] - 0.001, latlngs[0][1]], 17)
 }
 
 
@@ -530,7 +534,7 @@ panorama.addListener('position_changed', function () {
   console.log("rotation:" + panorama.pov.heading);
   panoramMan = L.marker([panorama.getPosition().lat(), panorama.getPosition().lng()],
     { rotationAngle: panorama.pov.heading, icon: streetIcon }).addTo(map);
-  map.setView([panorama.getPosition().lat(), panorama.getPosition().lng()], 17)
+  // map.setView([panorama.getPosition().lat(), panorama.getPosition().lng()], 17)
 });
 
 panorama.addListener('pov_changed', function () {
@@ -540,7 +544,7 @@ panorama.addListener('pov_changed', function () {
   console.log("rotation:" + panorama.pov.heading);
   panoramMan = L.marker([panorama.getPosition().lat(), panorama.getPosition().lng()],
     { rotationAngle: panorama.pov.heading, icon: streetIcon }).addTo(map);
-  map.setView([panorama.getPosition().lat(), panorama.getPosition().lng()], 17)
+  // map.setView([panorama.getPosition().lat(), panorama.getPosition().lng()], 17)
 });
 //map.fitBounds(voronoiLayer.getBounds());
 
@@ -564,4 +568,107 @@ mly.on(Mapillary.Viewer.nodechanged, function (node) {
   }
 
   map.setView(latLon);
+});
+
+function featchdata(d0) {
+
+  var ext = map.getBounds()
+  //資料
+
+  var poly = turf.polygon([[
+    [ext.getSouthWest().lng, ext.getSouthWest().lat],
+    [ext.getNorthWest().lng, ext.getNorthWest().lat],
+    [ext.getNorthEast().lng, ext.getNorthEast().lat],
+    [ext.getSouthEast().lng, ext.getSouthEast().lat],
+    [ext.getSouthWest().lng, ext.getSouthWest().lat]
+  ]]);
+  console.log(poly);
+  var d = [];
+
+  $.each(d0.features, function (k, v) {
+    var pt = turf.point([v.geometry.coordinates[0], v.geometry.coordinates[1]]);
+
+    if (turf.booleanPointInPolygon(pt, poly)) {
+      d.push(v);
+    }
+
+  });
+  var data = [];
+  var tmp_type;
+  var tmp_count = 0;
+
+  $.each(d, function (k, v) {
+    if (k == 0) {
+      tmp_type = v.properties.surface;
+      tmp_count++;
+    }
+    else if (k == d.length - 1) {
+      tmp_count++;
+      data.push({ "letter": tmp_type, "frequency": tmp_count })
+    }
+    else {
+      if (tmp_type == v.properties.surface) {
+        tmp_count++;
+      } else {
+        data.push({ "letter": tmp_type, "frequency": tmp_count })
+        tmp_count = 1;
+        tmp_type = v.properties.surface;
+      }
+    }
+  });
+
+
+
+  $("#svg").empty();
+  //設定畫布及x,y軸比例尺等
+  var svg = d3.select("#svg"),
+    margin = { top: 20, right: 20, bottom: 30, left: 40 },
+    width = +svg.attr("width") - margin.left - margin.right,
+    height = +svg.attr("height") - margin.top - margin.bottom;
+  var x = d3.scaleBand().rangeRound([0, width]).padding(0.1);
+  var y = d3.scaleLinear().rangeRound([height, 0]);
+
+  var column = svg.append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+  //設定資料範圍
+  x.domain(data.map(function (d) { return d.letter; }));
+  y.domain([0, d3.max(data, function (d) { return d.frequency; })]);
+
+  //x軸
+  column.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x));
+
+  //y軸
+  column.append("g")
+    .call(d3.axisLeft(y))
+    .append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 6)
+    .attr("dy", "0.71em")
+    .attr("text-anchor", "end")
+    .text("Frequency");
+
+  //bar chart部分
+  column.selectAll(".bar")
+    .data(data)
+    .enter().append("rect")
+    .attr("class", "bar")
+    .attr("x", function (d) { return x(d.letter); })
+    .attr("y", function (d) { return y(d.frequency); })
+    .attr("width", x.bandwidth())
+    .attr("height", function (d) { return height - y(d.frequency); })
+}
+
+
+map.on('zoomend', function () {
+  var d = pois.toGeoJSON();
+  featchdata(d);
+});
+
+map.on('dragend', function () {
+  var d = pois.toGeoJSON();
+  featchdata(d);
 });

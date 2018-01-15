@@ -48,6 +48,7 @@
              <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="route-btn"><i class="fa fa-indent white"></i>&nbsp;&nbsp;導航</a></li>
                <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="google-btn"><i class="fa fa-indent white"></i>&nbsp;&nbsp;Google街景</a></li>
               <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="mapillary-btn"><i class="fa fa-indent white"></i>&nbsp;&nbsp;Mapillary</a></li>
+            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="chart-btn"><i class="fa fa-indent white"></i>&nbsp;&nbsp;圖表</a></li>
           
             <ul>
 
@@ -114,8 +115,11 @@
       
               <div class="panel-body">
       <div id="googleStreet" style="display:none"> </div>
-  <div id="mly" > </div>
-
+  <div id="mly" style="display:none"> </div>
+      <div id="chart">
+      <svg id="svg" width="300" height="180"></svg>
+      </div>
+    
                 <div id="googleRouting" style="display:none">
                   <table class="table table-hover" id="route-list">
                      <thead class="hidden">
@@ -139,10 +143,12 @@
   <script type="text/javascript"
   src="https://maps.googleapis.com/maps/api/js?key=your_key&libraries=StreetViewPanorama">
 </script>
-    <script src='https://unpkg.com/mapillary-js@2.10.1/dist/mapillary.min.js'></script>
+<script src='https://unpkg.com/mapillary-js@2.10.1/dist/mapillary.min.js'></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 <script src="~/dist/assets/js/L.Control.Basemaps.js"></script>
 <script src="~/dist/assets/js/turf.min.js"></script>
 <script src="~/dist/assets/js/Control.Geocoder.js"></script>
